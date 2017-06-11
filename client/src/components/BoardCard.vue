@@ -1,16 +1,19 @@
 <template lang="html">
-  <el-card class="box-card">
+  <el-card :body-style="{ padding: '10px' }" style="height:auto;">
     <div slot="header" class="clearfix">
-      <span>{{task.title}}</span>
+      <el-row type="flex" class="row-bg" justify="space-between">
+        <el-col :span="12"><span><b>{{task.title}}</b></span></el-col>
+        <el-col :span="12" style="text-align:right;"><span><b>User: {{task.username}}</b></span></el-col>
+      </el-row>
     </div>
     <div class="text item">
       <span>Point: {{task.point}}</span>
       <p>Assigned To: {{task.assigned_to}}</p>
-      <el-button type="info" size="small" icon="view" @click="viewDetail">Show Detail</el-button>
+      <el-button size="small" icon="view" @click="viewDetail" style="background-color:mediumturquoise;color:#fff;">Show Detail</el-button>
     </div>
 
     <el-dialog v-model="displayVisibleDetail">
-      <el-card class="box-card">
+      <el-card :body-style="{ padding: '10px' }" style="height:auto;">
         <div slot="header" class="clearfix">
           <span><b>Detail Task: {{task.title}}</b></span>
         </div>
@@ -23,7 +26,8 @@
           <span>{{currentStatus}}</span>
         </div>
         <hr>
-        <el-row type="flex" class="row-bg" justify="space-between" style="padding:0px;margin:0px;">
+        <el-row type="flex" class="row-bg" justify="space-between" style="padding:0px;margin:0px;" v-if="userActive">
+
           <el-col :span="6">
             <el-popover
               ref="popover5"
@@ -36,10 +40,10 @@
                 <el-button type="primary" size="mini" @click="previousTask">Yes, I'm sure!</el-button>
               </div>
             </el-popover>
-
-            <el-button v-popover:popover5 type="danger" v-if="task.status != 0">{{previousStatus}}</el-button>
+            <el-button v-popover:popover5 icon="arrow-left" size="small" v-if="task.status != 0" style="background-color:gold;color:#fff;">{{previousStatus}}</el-button>
           </el-col>
-          <el-col :span="6">
+
+          <el-col :span="6" style="text-align:center;">
             <el-popover
               ref="popover5"
               placement="top"
@@ -51,10 +55,10 @@
                 <el-button type="primary" size="mini" @click="deleteTask">Yes, I'm sure!</el-button>
               </div>
             </el-popover>
-
-            <el-button v-popover:popover5 type="danger">Delete</el-button>
+            <el-button v-popover:popover5 icon="delete" type="danger" size="small">Delete</el-button>
           </el-col>
-          <el-col :span="6">
+
+          <el-col :span="6" style="text-align:right;">
             <el-popover
               ref="popover5"
               placement="top"
@@ -66,9 +70,9 @@
                 <el-button type="primary" size="mini" @click="nextTask">Yes, I'm sure!</el-button>
               </div>
             </el-popover>
-
-            <el-button v-popover:popover5 type="danger" v-if="task.status != 3">Next</el-button>
+            <el-button v-popover:popover5 size="small" v-if="task.status != 3" style="background-color:lawngreen;color:#fff;">Next &nbsp;<i class="el-icon-arrow-right"></i></el-button>
           </el-col>
+
         </el-row>
       </el-card>
     </el-dialog>
@@ -84,7 +88,7 @@ export default {
       visibleDelete: false,
       visiblePrevious: false,
       visibleNext: false,
-      visible2: false
+      userActive: false
     }
   },
   methods: {
@@ -175,6 +179,9 @@ export default {
   },
   created() {
     console.log('cek type: ', typeof this.task.status);
+    if (this.task.idUser === window.localStorage.getItem('id')) {
+      this.userActive = true
+    }
   }
 }
 </script>
@@ -182,5 +189,9 @@ export default {
 <style lang="css">
   .el-card {
     margin-bottom: 10px;
+  }
+
+  .el-card__header {
+    padding: 10px 10px;
   }
 </style>

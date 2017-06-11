@@ -1,7 +1,7 @@
 <template lang="html">
-  <el-card class="box-card">
+  <el-card :body-style="{ padding: '10px' }" style="height:auto;">
     <div slot="header" class="clearfix">
-      <span>{{titleCard}}</span>
+      <span><b>{{titleCard}}</b></span>
     </div>
     <BoardCard v-for="(task, index) in tasks" :key="index" :task="task"></BoardCard>
   </el-card>
@@ -19,4 +19,7 @@ export default {
 </script>
 
 <style lang="css">
+  .el-card__header {
+    padding: 10px 10px;
+  }
 </style>

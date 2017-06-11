@@ -1,15 +1,16 @@
 <template lang="html">
   <div>
     <el-menu theme="dark" class="el-menu-demo" mode="horizontal">
-      <!-- <el-menu-item index="1"><span><img src="https://balelang.com/wp-content/uploads/2017/02/Situs-Lelang-Online-800x262.png" alt="Logo" style="width:200px;heigth:100px;"></span></el-menu-item> -->
+      <el-menu-item index="1"><img src="https://cdn3.iconfinder.com/data/icons/kanban-board/128/Testing-512.png" alt="Logo" style="width:60px;height:60px;"></el-menu-item>
+      <el-menu-item index="1" style="padding-left:0px;"><span style="font-size:xx-large;">Kanban-Ok</span></el-menu-item>
       <div class="user_menu" style="float:right" v-show="statusLogin == null">
         <el-menu-item index="1" @click="signInDialog">SignIn</el-menu-item>
         <el-menu-item index="1" @click="signinfb">Signin FB</el-menu-item>
         <el-menu-item index="1" @click="signUpDialog">SignUp</el-menu-item>
       </div>
 
-      <el-submenu index="2" style="float:right" v-show="statusLogin">
-        <template slot="title">Welcome, {{userActive}}</template>
+      <el-submenu index="2" style="float:right;" v-show="statusLogin">
+        <template slot="title"><b>Welcome, {{userActive}}</b></template>
         <el-menu-item index="2-2">Profile</el-menu-item>
         <el-menu-item index="2-3" @click="signOut">SignOut</el-menu-item>
       </el-submenu>
@@ -251,6 +252,9 @@ export default {
 </script>
 
 <style lang="css">
+  .el-submenu__title {
+      font-size: medium;
+  }
   .el-select{
     width: 100%
   }
